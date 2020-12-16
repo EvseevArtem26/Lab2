@@ -13,7 +13,6 @@ int main()
     stack <char> tokens;
     string input, output;
     int k=0;
-    bool flag=true;
 
     cout<<"enter expression: ";
     getline(cin, input);
@@ -33,19 +32,15 @@ int main()
         }
         if (isdigit(input[k])) {
             output+=input[k];
-     		
-            flag=true;	
 
     
         }
         if (input[k] == '(') 
         {
             tokens.push('(');
-            flag=false;
         }
         if (input[k] == '+' || input[k] == '-' || input[k] == '/' || input[k] == '*')
         {
-        	flag=false;
         	output+=' ';
             if (tokens.empty()) {
                 tokens.push(input[k]);
