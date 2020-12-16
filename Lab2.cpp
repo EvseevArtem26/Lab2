@@ -8,14 +8,15 @@ using namespace std;
 
 int priority(char);
 
-void main(void)
+int main()
 {
     stack <char> tokens;
     string input, output;
     int k=0;
+    bool flag=true;
 
     cout<<"enter expression: ";
-    cin>>input;
+    getline(cin, input);
 
     while (input[k] != '\0')
     {
@@ -24,23 +25,28 @@ void main(void)
             while (true) 
             {
                 if (tokens.top() == '(') break;
-                output += tokens.top();
                 output += ' ';
+                output += tokens.top();
                 tokens.pop();
             }
             tokens.pop();
         }
-        if (input[k] >= '0' && input[k] <= '9') {
+        if (isdigit(input[k])) {
             output+=input[k];
-            output += ' ';
+     		
+            flag=true;	
+
     
         }
         if (input[k] == '(') 
         {
             tokens.push('(');
+            flag=false;
         }
         if (input[k] == '+' || input[k] == '-' || input[k] == '/' || input[k] == '*')
         {
+        	flag=false;
+        	output+=' ';
             if (tokens.empty()) {
                 tokens.push(input[k]);
             }
@@ -54,24 +60,27 @@ void main(void)
                 {
                     while (!tokens.empty() && priority(tokens.top()) >= priority(input[k])) 
                     {
+                    	
                         output += tokens.top();
                         output += ' ';
                         tokens.pop();
                     }
                     tokens.push(input[k]);
                 }
+
             }
         }
         k++;
     }
     while (!tokens.empty()) {
+    	output+=' ';
         output += tokens.top();
-        output += ' ';
+        
         tokens.pop();
     }
     output += '\0';
     cout << output;
-    
+    return 0;
 }
 
 
@@ -91,4 +100,5 @@ int priority(char a)
     case '(':
         return 1;
     }
+    return 0;
 }
