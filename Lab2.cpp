@@ -30,10 +30,9 @@ int main()
             }
             tokens.pop();
         }
-        if (isdigit(input[k])) {
+        if (isdigit(input[k])) 
+        {
             output+=input[k];
-
-    
         }
         if (input[k] == '(') 
         {
@@ -42,7 +41,12 @@ int main()
         if (input[k] == '+' || input[k] == '-' || input[k] == '/' || input[k] == '*')
         {
         	output+=' ';
-            if (tokens.empty()) {
+
+        	if (input[k]=='-' && (k==0 || !isdigit(input[k-1])))
+        		input[k]='~'; // унарный минус записывается как ~
+
+            if (tokens.empty()) 
+            {
                 tokens.push(input[k]);
             }
             else 
@@ -67,6 +71,7 @@ int main()
         }
         k++;
     }
+
     while (!tokens.empty()) {
     	output+=' ';
         output += tokens.top();
@@ -84,6 +89,8 @@ int priority(char a)
 {
     switch (a)
     {
+    case '~':
+    	return 4;
     case '*':
     case '/':
         return 3;
